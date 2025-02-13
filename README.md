@@ -7,7 +7,7 @@ CS 152 Final Project
 ## Getting started
 
 ### Setup
-1. `cd client && npm install & cd ../`
+1. `cd client && npm install & cd ..`
 2. `cd server && pip install -r requirements.txt && cd ..`
 
 ### Running
