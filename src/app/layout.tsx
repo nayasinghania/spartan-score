@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 
 export const metadata: Metadata = {
-  title: "SJSU GPA Calculator",
+  title: "Spartan Score",
   description: "A simple and intuitive GPA calculator for SJSU students.",
 };
 

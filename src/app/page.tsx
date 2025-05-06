@@ -128,7 +128,7 @@ export default function Page() {
             </CardTitle>
           </div>
           <CardDescription className="text-blue-100">
-            SJSU GPA Calculator
+            A GPA calculator for SJSU students
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
