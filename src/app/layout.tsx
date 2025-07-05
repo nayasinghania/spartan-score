@@ -6,6 +6,9 @@ import { ModeToggle } from "@/components/mode-toggle";
 export const metadata: Metadata = {
   title: "Spartan Score",
   description: "A simple and intuitive GPA calculator for SJSU students.",
+  verification: {
+    google: "Rqrp8tUebrSVgswxvXDwe31pXj3gSPB_rmlRHJoGaYc",
+  },
 };
 
 export default function RootLayout({
