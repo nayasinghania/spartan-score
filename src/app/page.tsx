@@ -162,7 +162,7 @@ export default function Page() {
                       <span className="font-bold">1</span>
                     </div>
                     <p className="dark:text-gray-300">
-                      Log in to your SJSU student dashboard
+                      Log in to Canvas at <a href="https://sjsu.instructure.com">https://sjsu.instructure.com</a>
                     </p>
                   </div>
                   <div className="flex items-start gap-4">
