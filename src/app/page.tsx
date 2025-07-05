@@ -178,7 +178,7 @@ export default function Page() {
                       <span className="font-bold">3</span>
                     </div>
                     <p className="dark:text-gray-300">
-                      Take a screenshot of your grades page
+                      Take a screenshot of your grades (and crop if needed)
                     </p>
                   </div>
                   <div className="flex items-start gap-4">
