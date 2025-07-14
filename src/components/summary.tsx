@@ -1,4 +1,4 @@
-import { Grade } from "@/app/types";
+import { Grade } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface SummaryProps {

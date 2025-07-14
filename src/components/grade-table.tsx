@@ -1,4 +1,4 @@
-import { Grade } from "@/app/types";
+import { Grade } from "@/lib/types";
 import {
   Table,
   TableBody,
