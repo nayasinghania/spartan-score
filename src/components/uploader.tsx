@@ -1,5 +1,5 @@
 import { Upload } from "lucide-react";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 
 interface UploadProps {
   fcn: (event: React.ChangeEvent<HTMLInputElement>) => void;

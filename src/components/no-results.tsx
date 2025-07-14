@@ -1,5 +1,5 @@
 import { FileText } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 interface NoResultsProps {
   setActiveTab: (tab: string) => void;

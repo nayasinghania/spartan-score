@@ -6,7 +6,7 @@ import { createWorker } from "tesseract.js";
 import type { Grade } from "@/app/types";
 import { FileText, Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { numberToGPA, numberToLetter } from "./grades";
+import { numberToGPA, numberToLetter } from "@/lib/grades";
 import Header from "@/components/header";
 import Instructions from "@/components/instructions";
 import Uploader from "@/components/uploader";
