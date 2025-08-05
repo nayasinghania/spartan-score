@@ -10,6 +10,7 @@ import React, {
 } from "react";
 
 import { createWorker } from "tesseract.js";
+import { GradeTable } from "@/lib/tables";
 
 interface UploadContextType {
   parsedImage: Grade[];
@@ -38,16 +39,29 @@ export function UploadProvider({ children }: { children: ReactNode }) {
             const semester = line.split(":");
             const nameGradeSection = line.split(" - ")[1];
             const nameGradeList = nameGradeSection.split(" ");
+            const grade = parseFloat(
+              nameGradeList
+                .filter((item) => item.includes("%"))[0]
+                .split("%")[0],
+            );
             grades.push({
               semester: semester[0],
               course: semester[1].split(" ")[1],
               section: semester[1].split(" ")[3],
-              grade: nameGradeList
-                .filter((item) => item.includes("%"))[0]
-                .split("%")[0],
+              grade,
               name: nameGradeList
                 .filter((item) => !item.includes("%"))
                 .join(" "),
+              letter:
+                GradeTable.find(
+                  (gradeObj) =>
+                    gradeObj.maxNumber >= grade && gradeObj.minNumber <= grade,
+                )?.letter || "F",
+              points:
+                GradeTable.find(
+                  (gradeObj) =>
+                    gradeObj.maxNumber >= grade && gradeObj.minNumber <= grade,
+                )?.points || 0.0,
             });
           }
           setParsedImage(grades);

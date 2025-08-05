@@ -16,7 +16,9 @@ export default function GradeDisplay() {
                 {grade.semester}: {grade.course} Sec {grade.section} -{" "}
                 {grade.name}
               </p>
-              <p>{grade.grade}%</p>
+              <p>
+                {grade.points.toFixed(1)}: {grade.letter}: {grade.grade}%
+              </p>
             </li>
           ))}
         </ul>
