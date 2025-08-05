@@ -1,9 +1,7 @@
 export type Grade = {
-  subject: string;
-  code: string;
   semester: string;
-  year: number;
-  grade: number;
-  letter: string;
-  gpa: number;
+  course: string;
+  section: string;
+  grade: string;
+  name: string;
 };

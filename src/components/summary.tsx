@@ -1,25 +1,7 @@
-import { Grade } from "@/lib/types";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-interface SummaryProps {
-  totalGPA: number;
-  grades: Grade[];
-}
-
-export default function Summary({ totalGPA, grades }: SummaryProps) {
+export default function Summary() {
   return (
-    <Card className="bg-blue-50 dark:bg-blue-950">
-      <CardHeader>
-        <CardTitle className="text-lg">Academic Summary</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex">
-          <p className="text-lg">Overall GPA:&nbsp;</p>
-          <p className="text-lg font-bold">
-            {((totalGPA || 0) / grades.length).toFixed(2)}
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+    <div>
+      <h2>Summary</h2>
+    </div>
   );
 }
