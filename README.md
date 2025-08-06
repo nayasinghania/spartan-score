@@ -14,13 +14,13 @@ Spartan Score is a GPA calculator designed for SJSU students to be able to easil
 
 ## Setup
 
-## Frontend
+### Frontend
 
 1. `npm install`
 2. `npm run dev`
 3. `http://localhost:3000`
 
-## Scraper (inserts course data into database)
+### Scraper (inserts course data into database)
 
 1. `npm run scraper:install`
 2. cp `.env.example` `.env`
