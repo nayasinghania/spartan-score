@@ -10,9 +10,9 @@
 		"format": "biome format --write",
 		"scraper:install": "pip install -r requirements.txt",
 		"db:start": "docker compose up -d",
-		"db:stop": "docker compose down -v",
-		"scrape:courses": "python src/scraper/courses.py",
-		"scrape:professors": "python src/scraper/professors.py"
+		"db:stop": "docker compose down",
+		"scraper:courses": "python src/scraper/courses.py",
+		"scraper:professors": "python src/scraper/professors.py"
 	},
 	"dependencies": {
 		"@radix-ui/react-slot": "^1.2.3",
