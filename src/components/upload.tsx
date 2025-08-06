@@ -18,7 +18,7 @@ export default function Upload() {
 		<div>
 			<h2>Upload</h2>
 			<Input type="file" accept="image/*" onChange={handleFileChange} />
-			<p className="text-red-800 dark:text-red-300">{error}</p>
+			<p className="text-sjsu-error">{error}</p>
 		</div>
 	);
 }

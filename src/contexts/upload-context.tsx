@@ -59,7 +59,7 @@ export function UploadProvider({ children }: { children: ReactNode }) {
 									" 20" +
 									semester[0][2] +
 									semester[0][3] || "Unknown",
-							course: semester[1].split(" ")[1],
+							course: semester[1].split(" ")[1].replace("-", " "),
 							section: semester[1].split(" ")[3],
 							grade,
 							name: nameGradeList

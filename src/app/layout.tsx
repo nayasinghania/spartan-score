@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ModeToggle } from "@/components/mode-toggle";
-import { ThemeProvider } from "@/components/theme-provider";
+import { Nunito_Sans } from "next/font/google";
 import Title from "@/components/title";
 import { UploadProvider } from "@/contexts/upload-context";
+
+const nunitoSans = Nunito_Sans({
+	subsets: ["latin"],
+	weight: "400",
+});
 
 export const metadata: Metadata = {
 	title: "Spartan Score Grade Calculator",
@@ -20,22 +24,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en" className={nunitoSans.className} suppressHydrationWarning>
 			<body>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
-					<UploadProvider>
-						<Title />
-						<div className="container m-4 md:mx-8 md:my-6 max-w-[90%] md:max-w-xl">
-							{children}
-						</div>
-						<ModeToggle />
-					</UploadProvider>
-				</ThemeProvider>
+				<UploadProvider>
+					<Title />
+					<div className="container m-4 md:mx-8 md:my-6 max-w-[90%] md:max-w-xl">
+						{children}
+					</div>
+				</UploadProvider>
 			</body>
 		</html>
 	);

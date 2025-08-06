@@ -7,13 +7,13 @@ export default function GradeDisplay() {
 
 	return (
 		<div>
-			<h2>Grade Display</h2>
+			<h2>Grades</h2>
 			{parsedImage && parsedImage.length > 0 ? (
 				<ul>
 					{parsedImage.map((grade) => (
 						<li key={grade.name} className="flex justify-between">
 							<p>
-								{grade.semester}: {grade.course} Sec {grade.section} -{" "}
+								{grade.course} (Section {grade.section}) -&nbsp;
 								{grade.name}
 							</p>
 							<div className="flex">
