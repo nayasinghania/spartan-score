@@ -80,4 +80,4 @@ def rmp_find_professors_page(cursor: str, count: int):
         professors.insert_one(info)
 
 
-rmp_find_professors_page("", 10)
+rmp_find_professors_page("", 1000)
