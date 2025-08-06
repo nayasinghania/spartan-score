@@ -13,8 +13,8 @@ export default function Instructions() {
 					</Link>
 				</li>
 				<li>
-					Ensure you are on the "Card View" of your courses, then click "View
-					Grades" towards the right of the page
+					Ensure you are on the <strong>Card View</strong> of your courses, then
+					click <strong>View Grades</strong> towards the right of the page
 				</li>
 				<li>
 					Take a screenshot of your grades, like below
