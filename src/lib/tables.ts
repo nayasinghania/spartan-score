@@ -72,3 +72,14 @@ export const GradeTable = [
     points: 0.0,
   },
 ];
+
+export const SemesterTable = [
+  {
+    semester: "Fall",
+    code: "FA",
+  },
+  {
+    semester: "Spring",
+    code: "SP",
+  },
+];

@@ -10,11 +10,12 @@ import React, {
 } from "react";
 
 import { createWorker } from "tesseract.js";
-import { GradeTable } from "@/lib/tables";
+import { GradeTable, SemesterTable } from "@/lib/tables";
 
 interface UploadContextType {
   parsedImage: Grade[];
   setUploadedFile: (file: File | null) => void;
+  error: string | null;
 }
 
 const UploadContext = createContext<UploadContextType | undefined>(undefined);
@@ -22,6 +23,7 @@ const UploadContext = createContext<UploadContextType | undefined>(undefined);
 export function UploadProvider({ children }: { children: ReactNode }) {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [parsedImage, setParsedImage] = useState<Grade[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (uploadedFile) {
@@ -36,16 +38,28 @@ export function UploadProvider({ children }: { children: ReactNode }) {
             .filter((line) => line.includes(":"));
           const grades: Grade[] = [];
           for (const line of lines) {
-            const semester = line.split(":");
-            const nameGradeSection = line.split(" - ")[1];
-            const nameGradeList = nameGradeSection.split(" ");
-            const grade = parseFloat(
-              nameGradeList
-                .filter((item) => item.includes("%"))[0]
-                .split("%")[0],
-            );
+            const semester = line.split(":") || "error";
+            const nameGradeSection = line.split(" - ")[1] || "error";
+            const nameGradeList = nameGradeSection.split(" ") || "error";
+            const gradeString = nameGradeList
+              .filter((item) => item.includes("%"))[0]
+              ?.split("%")[0];
+            const grade = parseFloat(gradeString) || 999.99;
+            if (grade > 900) {
+              setError(
+                "Unable to parse grades. Please ensure your uploaded the correct image.",
+              );
+              break;
+            }
             grades.push({
-              semester: semester[0],
+              semester:
+                SemesterTable.find(
+                  (semesterObj) =>
+                    semesterObj.code === semester[0][0] + semester[0][1],
+                )?.semester +
+                  " 20" +
+                  semester[0][2] +
+                  semester[0][3] || "Unknown",
               course: semester[1].split(" ")[1],
               section: semester[1].split(" ")[3],
               grade,
@@ -65,6 +79,11 @@ export function UploadProvider({ children }: { children: ReactNode }) {
             });
           }
           setParsedImage(grades);
+          if (grades.length === 0) {
+            if (error === "") {
+              setError("No valid grades found in the image.");
+            }
+          }
           await worker.terminate();
         })();
       };
@@ -74,6 +93,7 @@ export function UploadProvider({ children }: { children: ReactNode }) {
   const value = {
     parsedImage,
     setUploadedFile,
+    error,
   };
 
   return (

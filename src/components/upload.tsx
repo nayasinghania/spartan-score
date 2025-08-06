@@ -5,7 +5,7 @@ import { useUpload } from "@/contexts/upload-context";
 import { ChangeEvent } from "react";
 
 export default function Upload() {
-  const { setUploadedFile } = useUpload();
+  const { setUploadedFile, error } = useUpload();
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -18,6 +18,7 @@ export default function Upload() {
     <div>
       <h2>Upload</h2>
       <Input type="file" accept="image/*" onChange={handleFileChange} />
+      <p className="text-red-800 dark:text-red-300">{error}</p>
     </div>
   );
 }

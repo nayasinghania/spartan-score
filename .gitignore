@@ -12,3 +12,6 @@ npm-debug.log*
 
 *.tsbuildinfo
 next-env.d.ts
+
+/src/scraper/__pycache__/
+.venv

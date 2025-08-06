@@ -11,14 +11,17 @@ export default function GradeDisplay() {
       {parsedImage && parsedImage.length > 0 ? (
         <ul>
           {parsedImage.map((grade) => (
-            <li key={grade.name}>
+            <li key={grade.name} className="flex justify-between">
               <p>
                 {grade.semester}: {grade.course} Sec {grade.section} -{" "}
                 {grade.name}
               </p>
-              <p>
-                {grade.points.toFixed(1)}: {grade.letter}: {grade.grade}%
-              </p>
+              <div className="flex">
+                <p>
+                  {grade.letter} ({grade.grade.toFixed(2)}%)&nbsp;-&nbsp;
+                </p>
+                <p>{grade.points.toFixed(2)}</p>
+              </div>
             </li>
           ))}
         </ul>

@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { UploadProvider } from "@/contexts/upload-context";
+import Title from "@/components/title";
 
 export const metadata: Metadata = {
   title: "Spartan Score Grade Calculator",
@@ -28,7 +29,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <UploadProvider>
-            <div className="container m-4 md:m-8 md:max-w-xl">{children}</div>
+            <Title />
+            <div className="container m-4 md:mx-8 md:my-6 max-w-[90%] md:max-w-xl">
+              {children}
+            </div>
             <ModeToggle />
           </UploadProvider>
         </ThemeProvider>
