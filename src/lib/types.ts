@@ -6,4 +6,5 @@ export type Grade = {
 	name: string;
 	letter: string;
 	points: number;
+	units: number;
 };

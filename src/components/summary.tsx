@@ -10,10 +10,10 @@ export default function Summary() {
 	useEffect(() => {
 		if (parsedImage && parsedImage.length > 0) {
 			const totalScore = parsedImage.reduce(
-				(acc, item) => 3 * item.points + acc,
+				(acc, item) => item.units * item.points + acc,
 				0,
 			);
-			const totalUnits = 3 * parsedImage.length;
+			const totalUnits = parsedImage.reduce((acc, item) => item.units + acc, 0);
 			const averageScore = totalScore / totalUnits;
 			setGpa(averageScore);
 		}
@@ -24,11 +24,8 @@ export default function Summary() {
 			{parsedImage && parsedImage.length > 0 && (
 				<div>
 					<h2>Summary</h2>
-					<p>
-						Your current GPA for the {parsedImage[0].semester} semester is{" "}
-						<strong>{gpa?.toFixed(2)}</strong>/4.00, assuming each course is
-						worth 3 units.
-					</p>
+					<p className="font-bold">Spring 2025 GPA</p>
+					<p className="text-xl font-bold">{gpa?.toFixed(2)}/4.00</p>
 				</div>
 			)}
 		</div>
