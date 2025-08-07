@@ -3,7 +3,7 @@ from db import get_database
 
 db = get_database()
 professors = db.get_collection("professors")
-professors.drop()
+# professors.drop()
 
 url = "https://www.ratemyprofessors.com/graphql"
 
@@ -33,18 +33,17 @@ query TeacherSearchResultsPageQuery($query: TeacherSearchQuery!, $cursor: String
 """
 
 
-def variables(cursor: str, count: int):
+def variables(cursor: str):
     return {
         "query": {
             "schoolID": "U2Nob29sLTg4MQ==",
-            # "fallback": True,
         },
         "cursor": cursor,
-        "count": count,
+        "count": 1000,
     }
 
 
-def rmp_find_professors_page(cursor: str, count: int):
+def rmp_find_professors_page(cursor: str):
 
     headers = {
         "authorization": "Basic dGVzdDp0ZXN0",
@@ -54,23 +53,25 @@ def rmp_find_professors_page(cursor: str, count: int):
 
     body = {
         "query": query,
-        "variables": variables(cursor, count),
+        "variables": variables(cursor),
     }
     response = requests.post(url, json=body, headers=headers)
     data = response.json()
-    nodes = data["data"]["search"]["teachers"]["edges"]
-    for node in nodes:
-        info = {
-            "id": node["node"]["id"],
-            "avgRating": node["node"]["avgRating"],
-            "numRatings": node["node"]["numRatings"],
-            "firstName": node["node"]["firstName"],
-            "lastName": node["node"]["lastName"],
-            "department": node["node"]["department"],
-            "wouldTakeAgainPercent": node["node"]["wouldTakeAgainPercent"],
-            "avgDifficulty": node["node"]["avgDifficulty"],
-        }
-        professors.insert_one(info)
+    nodes = data["data"]["search"]["teachers"]
+    print(nodes)
+    return nodes
 
 
-rmp_find_professors_page("", 1000)
+def find_all_professors():
+    cursor = ""
+    has_next_page = True
+
+    while has_next_page:
+        professors_page = rmp_find_professors_page(cursor)
+        professors_list = [edge["node"] for edge in professors_page["edges"]]
+        # professors.insert_many(professors_list)
+        cursor = professors_page["pageInfo"]["endCursor"]
+        has_next_page = professors_page["pageInfo"]["hasNextPage"]
+
+
+find_all_professors()

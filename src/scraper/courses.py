@@ -5,7 +5,7 @@ from db import get_database
 
 db = get_database()
 courses = db.get_collection("courses")
-courses.drop()
+# courses.drop()
 
 response = requests.get("https://www.sjsu.edu/classes/schedules/fall-2025.php")
 soup = BeautifulSoup(response.content, "html.parser")
@@ -41,7 +41,7 @@ for row in rows:
         course_data.append(course_info)
 
 if course_data:
-    result = courses.insert_many(course_data)
+    # result = courses.insert_many(course_data)
     unit_1 = courses.find({"units": "6.0"})
     for course in unit_1:
         print(course)

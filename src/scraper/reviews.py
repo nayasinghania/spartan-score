@@ -1,7 +1,7 @@
 import requests
 
 from db import get_database
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
 def fetch_professor_data(professor_id):
@@ -56,6 +56,7 @@ def structure_data(data, professor_id):
     db = get_database()
     reviews = db.get_collection("reviews")
     rating_data = []
+    print(data["data"]["node"]["ratings"])
     for edge in data["data"]["node"]["ratings"]["edges"]:
         rating_data.append(
             {
@@ -67,8 +68,7 @@ def structure_data(data, professor_id):
                 "rating_tags": edge["node"]["ratingTags"],
             }
         )
-    reviews.insert_many(rating_data)
-
+    # reviews.insert_many(rating_data)
 
 
 def fetch_and_write():
@@ -76,18 +76,26 @@ def fetch_and_write():
     professors = db.get_collection("professors")
     professor_ids = professors.distinct("id")
     reviews = db.get_collection("reviews")
-    reviews.drop()
+    # reviews.drop()
 
-    with ProcessPoolExecutor(16) as executor:
+    with ProcessPoolExecutor(2) as executor:
         # Fetch data in parallel, then process sequentially
-        futures = [(executor.submit(fetch_professor_data, prof_id), prof_id) 
-                  for prof_id in professor_ids]
-        
+        future_to_prof_id = {
+            executor.submit(fetch_professor_data, prof_id): prof_id
+            for prof_id in professor_ids
+        }
+
         counter = 0
-        for future, prof_id in futures:
-            print(f"Processing course #{counter}")
-            fetched_data = future.result()
-            structure_data(fetched_data, prof_id)
-            counter += 1
+        for future in as_completed(future_to_prof_id):
+            prof_id = future_to_prof_id[future]
+            try:
+                print(f"Processing professor #{counter}")
+                fetched_data = future.result()
+                structure_data(fetched_data, prof_id)
+                counter += 1
+            except Exception as e:
+                print(f"Error processing professor {prof_id}: {e}")
+                continue
+
 
 fetch_and_write()
