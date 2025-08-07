@@ -19,7 +19,11 @@ for row in rows:
     if cells:
         course_info = {
             "code": cells[0].text.strip().split(" (Section ")[0],
-            "section": cells[0].text.strip().split(" (Section ")[1].replace(")", "") if " (" in cells[0].text else "",
+            "section": (
+                cells[0].text.strip().split(" (Section ")[1].replace(")", "")
+                if " (" in cells[0].text
+                else ""
+            ),
             "class_number": cells[1].text.strip(),
             "mode_of_instruction": cells[2].text.strip(),
             "course_title": cells[3].text.strip(),
