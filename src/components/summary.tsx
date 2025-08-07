@@ -25,7 +25,7 @@ export default function Summary() {
 				<div>
 					<h2>Summary</h2>
 					<p className="font-bold">Spring 2025 GPA</p>
-					<p className="text-xl font-bold">{gpa?.toFixed(2)}/4.00</p>
+					<p className="font-bold">{gpa?.toFixed(2)}/4.00</p>
 				</div>
 			)}
 		</div>

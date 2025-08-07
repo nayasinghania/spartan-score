@@ -28,7 +28,7 @@ export default function RootLayout({
 			<body>
 				<UploadProvider>
 					<Title />
-					<div className="container m-4 md:mx-8 md:my-6 max-w-[90%] md:max-w-xl">
+					<div className="container m-4 md:mx-8 md:my-6 max-w-[90%] md:max-w-3xl">
 						{children}
 					</div>
 				</UploadProvider>

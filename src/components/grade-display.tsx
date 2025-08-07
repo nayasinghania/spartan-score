@@ -30,21 +30,29 @@ export default function GradeDisplay() {
 				<Table>
 					<TableHeader>
 						<TableRow>
-							<TableHead>Code</TableHead>
-							<TableHead>Section</TableHead>
-							<TableHead>Name</TableHead>
-							<TableHead>Units</TableHead>
-							<TableHead>Grade</TableHead>
-							<TableHead>Letter</TableHead>
-							<TableHead>Points</TableHead>
+							<TableHead className="font-bold">Course</TableHead>
+							<TableHead className="hidden md:table-cell font-bold">
+								Section
+							</TableHead>
+							<TableHead className="hidden md:table-cell font-bold">
+								Name
+							</TableHead>
+							<TableHead className="font-bold">Units</TableHead>
+							<TableHead className="font-bold">Grade (%)</TableHead>
+							<TableHead className="font-bold">Letter</TableHead>
+							<TableHead className="font-bold">Points</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						{parsedImage.map((grade) => (
 							<TableRow key={grade.course}>
 								<TableCell>{grade.course}</TableCell>
-								<TableCell>{grade.section}</TableCell>
-								<TableCell>{grade.name}</TableCell>
+								<TableCell className="hidden md:table-cell">
+									{grade.section}
+								</TableCell>
+								<TableCell className="hidden md:table-cell">
+									{grade.name}
+								</TableCell>
 								<TableCell>{grade.units}</TableCell>
 								<TableCell>{grade.grade}</TableCell>
 								<TableCell>{grade.letter}</TableCell>
