@@ -13,7 +13,8 @@
 		"db:stop": "docker compose down",
 		"scraper:courses": "python src/scraper/courses.py",
 		"scraper:professors": "python src/scraper/professors.py",
-		"scraper:reviews": "python src/scraper/reviews.py"
+		"scraper:reviews": "python src/scraper/reviews.py",
+		"scraper:csv": "python src/scraper/csv.py"
 	},
 	"dependencies": {
 		"class-variance-authority": "^0.7.1",
