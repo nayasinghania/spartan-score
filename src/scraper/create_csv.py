@@ -19,7 +19,6 @@ for review in all_reviews:
     if professor:
         sjsu_rmp_data.append(
             {
-                "professor_id": professor["id"],
                 "professor_first_name": professor["firstName"],
                 "professor_last_name": professor["lastName"],
                 "professor_department": professor["department"],
@@ -28,10 +27,10 @@ for review in all_reviews:
                 "num_ratings": professor["numRatings"],
                 "would_take_again_percent": professor["wouldTakeAgainPercent"],
                 "comment": review.get("comment"),
-                "difficulty_rating": review.get("rating"),
+                "difficulty_rating": review.get("difficulty_rating"),
                 "grade": review.get("grade"),
-                "clarity_rating": review.get("clarityRating"),
-                "rating_tags": review.get("ratingTags"),
+                "clarity_rating": review.get("clarity_rating"),
+                "rating_tags": review.get("rating_tags"),
             }
         )
 
