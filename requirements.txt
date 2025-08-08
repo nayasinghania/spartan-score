@@ -4,5 +4,6 @@ pandas
 pymongo
 dotenv
 jupyter
+scikit-learn
 black
 black[jupyter]
