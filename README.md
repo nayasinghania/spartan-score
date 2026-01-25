@@ -2,7 +2,7 @@
 
 ## About
 
-Spartan Score is a GPA calculator designed for SJSU students to be able to easily calculate their GPA with just a screenshot of their grades. Currently working on an ML pipeline to provide statistics of other students in similar classes
+Spartan Score is a GPA calculator designed for SJSU students to be able to easily calculate their GPA with just a screenshot of their grades. Currently working on an ML pipeline to provide statistics of other students in similar classes. 
 
 ### Tech Stack
 
@@ -22,6 +22,7 @@ Spartan Score is a GPA calculator designed for SJSU students to be able to easil
 4. `docker compose up` (to setup mongodb to pull data after scraping completed)
 
 ### Scraper (inserts course data into database)
+Note that the last generated CSV is in `src/scraper`
 
 1. `npm run scraper:install`
 2. cp `.env.example` `.env`
