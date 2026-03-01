@@ -1,9 +1,0 @@
-requests
-beautifulsoup4
-pandas
-pymongo
-dotenv
-jupyter
-scikit-learn
-black
-black[jupyter]
