@@ -27,78 +27,107 @@ export function UploadProvider({ children }: { children: ReactNode }) {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (uploadedFile) {
-			setLoading(true);
-			const reader = new FileReader();
-			reader.readAsDataURL(uploadedFile);
-			reader.onloadend = () => {
-				(async () => {
-					const worker = await createWorker("eng");
-					const ret = await worker.recognize(reader.result as string);
-					setLoading(false);
+		if (!uploadedFile) return;
 
+		let cancelled = false;
+		setLoading(true);
+		setError(null);
+		setParsedImage([]);
+
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			(async () => {
+				const worker = await createWorker("eng");
+				try {
+					if (typeof reader.result !== "string") {
+						throw new Error("Invalid file format");
+					}
+
+					const ret = await worker.recognize(reader.result);
 					const lines = ret.data.text
 						.split("\n")
-						.filter((line) => line.includes(":"));
+						.map((line) => line.trim())
+						.filter((line) => line.includes(":") && line.includes(" - "));
+
 					const grades: Grade[] = [];
 					for (const line of lines) {
-						const semester = line.split(":") || "error";
-						const nameGradeSection = line.split(" - ")[1] || "error";
-						const nameGradeList = nameGradeSection.split(" ") || "error";
-						const gradeString = nameGradeList
-							.filter((item) => item.includes("%"))[0]
+						const semester = line.split(":");
+						const semesterInfo = semester[1]?.trim().split(/\s+/) ?? [];
+						const nameGradeSection = line.split(" - ")[1] ?? "";
+						const gradeString = nameGradeSection
+							.split(/\s+/)
+							.find((item) => item.includes("%"))
 							?.split("%")[0];
-						const course = semester[1].split(" ")[1].replace("-", " ");
-						const section = semester[1].split(" ")[3];
-						const grade = parseFloat(gradeString) || 999.99;
-						const results = null;
+						const course = semesterInfo[1]?.replace("-", " ");
+						const section = semesterInfo[3];
+						const grade = Number.parseFloat(gradeString ?? "");
 
-						if (grade > 900) {
-							setError(
-								"Unable to parse grades. Please ensure your uploaded the correct image.",
-							);
-							break;
+						if (!course || !section || !Number.isFinite(grade)) {
+							continue;
 						}
+
+						const gradeEntry = GradeTable.find(
+							(gradeObj) =>
+								gradeObj.maxNumber >= grade && gradeObj.minNumber <= grade,
+						);
+						const semesterCode = semester[0]?.slice(0, 2) ?? "";
+						const semesterYear = semester[0]?.slice(2, 4) ?? "";
+						const semesterName =
+							SemesterTable.find(
+								(semesterObj) => semesterObj.code === semesterCode,
+							)?.semester ?? "Unknown";
+
 						grades.push({
 							semester:
-								SemesterTable.find(
-									(semesterObj) =>
-										semesterObj.code === semester[0][0] + semester[0][1],
-								)?.semester +
-									" 20" +
-									semester[0][2] +
-									semester[0][3] || "Unknown",
+								semesterName === "Unknown"
+									? "Unknown"
+									: `${semesterName} 20${semesterYear}`,
 							course,
 							section,
 							grade,
-							units: parseInt(results?.units, 10) || 3,
-							name: results?.course_title,
-							letter:
-								GradeTable.find(
-									(gradeObj) =>
-										gradeObj.maxNumber >= grade && gradeObj.minNumber <= grade,
-								)?.letter || "F",
-							points:
-								GradeTable.find(
-									(gradeObj) =>
-										gradeObj.maxNumber >= grade && gradeObj.minNumber <= grade,
-								)?.points || 0.0,
+							units: 3,
+							name: course,
+							letter: gradeEntry?.letter ?? "F",
+							points: gradeEntry?.points ?? 0.0,
 						});
 					}
 
-					setParsedImage(grades);
-					if (grades.length === 0) {
-						if (error === "") {
-							setError("No valid grades found in the image.");
-						}
-					} else {
-						setError("");
+					if (!cancelled) {
+						setParsedImage(grades);
+						setError(
+							grades.length > 0
+								? null
+								: "No valid grades found in the uploaded image.",
+						);
 					}
+				} catch {
+					if (!cancelled) {
+						setParsedImage([]);
+						setError(
+							"Unable to parse grades. Please ensure you uploaded the correct image.",
+						);
+					}
+				} finally {
 					await worker.terminate();
-				})();
-			};
-		}
-	}, [uploadedFile, error]);
+					if (!cancelled) {
+						setLoading(false);
+					}
+				}
+			})();
+		};
+		reader.onerror = () => {
+			if (!cancelled) {
+				setParsedImage([]);
+				setError("Unable to read the uploaded file.");
+				setLoading(false);
+			}
+		};
+		reader.readAsDataURL(uploadedFile);
+
+		return () => {
+			cancelled = true;
+		};
+	}, [uploadedFile]);
 
 	const value = {
 		parsedImage,
