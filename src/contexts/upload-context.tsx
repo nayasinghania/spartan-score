@@ -8,7 +8,6 @@ import {
 	useState,
 } from "react";
 import { createWorker } from "tesseract.js";
-import run from "@/lib/db";
 import { GradeTable, SemesterTable } from "@/lib/tables";
 import type { Grade } from "@/lib/types";
 
@@ -52,7 +51,7 @@ export function UploadProvider({ children }: { children: ReactNode }) {
 						const course = semester[1].split(" ")[1].replace("-", " ");
 						const section = semester[1].split(" ")[3];
 						const grade = parseFloat(gradeString) || 999.99;
-						const results = await run(course, section).catch(console.dir);
+						const results = null;
 
 						if (grade > 900) {
 							setError(
