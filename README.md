@@ -12,6 +12,6 @@ Spartan Score is a GPA calculator designed for SJSU students to be able to easil
 
 ## Setup
 
-1. `npm install`
-2. `npm run dev`
+1. `bun install`
+2. `bun dev`
 3. `http://localhost:3000`
